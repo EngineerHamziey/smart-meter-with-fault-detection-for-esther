@@ -1,4 +1,4 @@
-#if 1
+#if 0
 
 #include <PZEM004Tv30.h>
 #include <HardwareSerial.h>
@@ -42,13 +42,16 @@ void calculateACParameters() {
 
 void setup() {
   Serial.begin(115200);
+  
 
   // Initialize PZEM UART on your new pins
   // PZEMSerial.begin(9600, SERIAL_8N1, PZEM_RX, PZEM_TX);
   // PZEM004Tv30 pzem(PZEMSerial, PZEM_RX, PZEM_TX);
 
-  pinMode(5, OUTPUT);
-  digitalWrite(5, HIGH);  // Power ON PZEM board if needed
+  pinMode(32, OUTPUT);
+  pinMode(33, OUTPUT);
+  digitalWrite(32, HIGH); // relays test
+  digitalWrite(33, HIGH); // relays test
 
   Serial.println("Custom UART serial for PZEM started...");
 }

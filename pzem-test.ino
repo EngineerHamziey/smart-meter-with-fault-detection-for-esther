@@ -33,9 +33,13 @@ void calculateACParameters() {
 
 void setup() {
   Serial.begin(115200);
+  Serial2.begin(9600, SERIAL_8N1, 16, 17);
 
-  pinMode(5, OUTPUT);
-  digitalWrite(5, HIGH);  // Power ON PZEM board if applicable
+  
+  pinMode(32, OUTPUT);
+  pinMode(33, OUTPUT);
+  digitalWrite(32, HIGH); // relays test
+  digitalWrite(33, HIGH); // relays test
 }
 
 void loop() {
