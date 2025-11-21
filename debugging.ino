@@ -1,4 +1,4 @@
-#if 1
+#if 0
 // the math library is used to enable the check for "isnan"
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
