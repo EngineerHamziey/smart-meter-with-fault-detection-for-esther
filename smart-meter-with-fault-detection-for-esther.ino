@@ -7,7 +7,7 @@
 #include <WebSocketsServer.h>
 
 // Replace these with your Wi-Fi credentials
-const char* ssid = "Smart_Power_meter_with_IOT_App";
+const char* ssid = "Smart_Power_meter_with_FAULT_DETECTION";
 const char* password = "123456789";
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -24,7 +24,7 @@ double
 #define relay2 33
 #define displayDelay 1000
 #define scrollSpeed 300
-#define projectTitle "SMART POWER METER WITH IOT APP"
+#define projectTitle "SMART POWER METER WITH FAULT DETECTION"
 
 bool isFault = false;
 
@@ -152,11 +152,14 @@ void loop() {
   jsonPayload += "\"energyValue\": " + String(energyValue, 2);
   jsonPayload += "}";
 
-  if (powerValue > 20) {
+  if (powerValue > 50) {
     lcd.clear();
     digitalWrite(relay1, LOW);
     digitalWrite(relay2, LOW);
-    scrollMsg("FAULT DETECTED:POWER DRAW TOO HIGH, OUTLETS OFF");
+    while (1) {
+      scrollMsg("FAULT DETECTED:POWER DRAW TOO HIGH, OUTLETS OFF        ");
+    }
+    
     isFault = true;
   }
 
