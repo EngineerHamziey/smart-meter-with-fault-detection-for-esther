@@ -158,6 +158,8 @@ void loop() {
     digitalWrite(relay2, LOW);
     while (1) {
       scrollMsg("FAULT DETECTED:POWER DRAW TOO HIGH, OUTLETS OFF        ");
+      jsonPayload = "FAULT DETECTED:POWER DRAW TOO HIGH, OUTLETS OFF";
+      webSocket.broadcastTXT(jsonPayload);
     }
     
     isFault = true;
