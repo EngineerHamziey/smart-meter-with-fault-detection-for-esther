@@ -149,23 +149,28 @@ void loop() {
   jsonPayload += "\"powerFactorValue\": " + String(powerFactorValue, 2) + ",";
   jsonPayload += "\"frequencyValue\": " + String(frequencyValue, 2) + ",";
   jsonPayload += "\"powerValue\": " + String(powerValue, 2) + ",";
-  jsonPayload += "\"energyValue\": " + String(energyValue, 2);
-  jsonPayload += "}";
+  jsonPayload += "\"energyValue\": " + String(energyValue, 2)+ ",";
 
-  if (powerValue > 50) {
-    lcd.clear();
-    digitalWrite(relay1, LOW);
-    digitalWrite(relay2, LOW);
-    while (1) {
-      scrollMsg("FAULT DETECTED:POWER DRAW TOO HIGH, OUTLETS OFF        ");
-      jsonPayload = "FAULT DETECTED:POWER DRAW TOO HIGH, OUTLETS OFF";
-      webSocket.broadcastTXT(jsonPayload);
-    }
-    
+  if (powerValue > 50.0) {
     isFault = true;
   }
 
-  webSocket.broadcastTXT(jsonPayload);
+  if (isFault) {
+    lcd.clear();
+    digitalWrite(relay1, LOW);
+    digitalWrite(relay2, LOW);
+    jsonPayload += "\"error\": \"FAULT DETECTED:POWER DRAW TOO HIGH, OUTLETS OFF\"";
+    jsonPayload += "}";
+
+    webSocket.broadcastTXT(jsonPayload);
+    lcd.clear();
+    lcd.print("FAULT DETECTED");
+  }else {
+    jsonPayload += "\"error\": \"\"";
+    jsonPayload += "}";
+    webSocket.broadcastTXT(jsonPayload);
+  }
+
   delay(1500);  // to slow things down a little
 }
 
